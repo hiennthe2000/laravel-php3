@@ -1,0 +1,39 @@
+@section('content')
+    <h5 class="bg-warning bg-gradient" style="padding: 10px;"><b>Sửa danh mục bản tin</b></h5>
+    <form action="{{ route('update_category_product', $edit->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mb-3 mt-3">
+            <label for="name" class="form-label">Tên mục</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Nhập tên" name="name" value="{{ old('name', $edit->name) }}">
+            @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="contents" class="form-label">Mô tả</label>
+            <textarea type="text" class="form-control @error('contents') is-invalid @enderror" id="contents" placeholder="Nhập mô tả..." name="contents">{{ old('contents', $edit->contents) }}</textarea>
+            @error('contents')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="image" class="form-label">Ảnh hiện tại</label> <br>
+            @if($edit->image)
+                <img src="{{ asset('storage/' . $edit->image) }}" alt="" width="130px" height="90px">
+            @else
+                <h3><i>Không có ảnh!</i></h3>
+            @endif
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="image" class="form-label">Chọn ảnh mới</label>
+            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+            @error('image')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+    </form>
+
+@endsection
+@extends('admin.layouts.master')
+
